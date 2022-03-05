@@ -1,4 +1,7 @@
 */cfpbcomplaints.db
 */local_results/*
 */.DS_Store*
+*/output_images/*
+*/.dask_prefect_env/*
+*/dask-worker-space/*
 
