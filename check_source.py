@@ -1,6 +1,5 @@
 import requests
 import json
-import pprint
 
 url = "https://www.consumerfinance.gov/data-research/consumer-complaints/search/api/v1/"
 r = requests.get(url, params={'size':10})

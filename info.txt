@@ -4,3 +4,7 @@ Tutorial "Getting Started with Prefect (PyData Denver)"
 Prefect Server:
 - prefect backend server
 - prefect server start
+- refect create project 'tutorial'
+- run script with f.register(project_name='tutorial')
+- prefect agent local start
+- if changes run script again

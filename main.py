@@ -5,6 +5,7 @@ from contextlib import closing
 import sqlite3
 import datetime
 
+import prefect
 from prefect import task, Flow
 from prefect.tasks.database.sqlite import SQLiteScript
 from prefect.schedules import IntervalSchedule
@@ -34,6 +35,8 @@ create_table = SQLiteScript(
 def get_complaint_data():
     url = "https://www.consumerfinance.gov/data-research/consumer-complaints/search/api/v1/"
     r = requests.get(url, params={'size':10})
+    logger =  prefect.context.get('logger')
+    logger.info('Getting data')
     response_json = json.loads(r.text)
     return response_json['hits']['hits']
 
@@ -67,11 +70,11 @@ def store_complaints(parsed):
             conn.commit()
 schedule = IntervalSchedule(interval=datetime.timedelta(minutes=1))
 
-with Flow("my etl flow", schedule, state_handlers=[alert_flow_failed]) as f:
+with Flow("my_etl_flow", schedule, state_handlers=[alert_flow_failed]) as f:
     db_table=create_table()
     raw = get_complaint_data()
     parsed = parse_complaint_data(raw)
     populated_table=store_complaints(parsed)
     populated_table.set_upstream(db_table)
 
-f.run()
+f.register(project_name='tutorial')
