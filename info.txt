@@ -1,0 +1,6 @@
+Tutorial "Getting Started with Prefect (PyData Denver)"
+- https://www.youtube.com/watch?v=FETN0iivZps
+
+Prefect Server:
+- prefect backend server
+- prefect server start
